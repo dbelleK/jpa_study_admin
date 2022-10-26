@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OrderDetailRepositoryTest extends StudyApplicationTests {
@@ -15,12 +16,11 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests {
 
     @Test
     public void create(){
-        OrderDetail orderDetail = new OrderDetail();
+/*        OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrderAt(LocalDateTime.now());
 
         //어떤사람?
        // orderDetail.setUserId(5L);
-
         //어떤상품?
         //orderDetail.setItemId(1L);
 
@@ -28,6 +28,26 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests {
 
         //디비에 저장
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
+        Assertions.assertNotNull(newOrderDetail);*/
+
+        OrderDetail orderDetail = new OrderDetail();
+
+        orderDetail.setStatus("WAITING");
+        orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2)); //현재일자부터 2틀이 더해짐
+        orderDetail.setQuantity(1);
+        orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
+        orderDetail.setOrderGroupId(1L); //장바구니
+        orderDetail.setItemId(1L);
+        orderDetail.setCreatedAt(LocalDateTime.now());
+        orderDetail.setCreatedBy("AdminServer");
+
+       // 어떠한 장바구니에
+      // orderDetail.setOrderGroupId(1L); // Long -> OrderGroup
+        // 어떠한 상품
+       orderDetail.setItemId(1L);
+
+        OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
         Assertions.assertNotNull(newOrderDetail);
     }
+
 }

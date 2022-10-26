@@ -18,8 +18,8 @@ public class UserRepositoryTest extends StudyApplicationTests {
     private UserRepository userRepository;
 
     @Test //Test라는 어노테이션
-    public void create(){
-        // String sql = insert into user(%s, %s, %d) value (account, email, age);
+    public void create() {
+/*        // String sql = insert into user(%s, %s, %d) value (account, email, age);
 
         //jpa
         User user = new User();
@@ -31,14 +31,36 @@ public class UserRepositoryTest extends StudyApplicationTests {
         user.setCreatedBy("TesetUser3");
 
         User newUser = userRepository.save(user);
-        System.out.println("newUser:" + newUser);
+        System.out.println("newUser:" + newUser);*/
 
+        String account = "Test01";
+        String password = "Test01";
+        String status = "REGISTERED";
+        String email = "Test01@gmail.com";
+        String phoneNumber = "010-1111-2222";
+        LocalDateTime registeredAt = LocalDateTime.now();
+        LocalDateTime createdAt = LocalDateTime.now();
+        String createdBy = "AdminServer";
+
+
+        User user = new User();
+        user.setAccount(account);
+        user.setPassword(password);
+        user.setStatus(status);
+        user.setEmail(email);
+        user.setPhoneNumber(phoneNumber);
+        user.setRegisteredAt(registeredAt);
+        user.setCreatedAt(createdAt);
+        user.setCreatedBy(createdBy);
+
+        User newUser = userRepository.save(user);
+        Assertions.assertNotNull(newUser);
     }
 
     @Test
     @Transactional
-    public void read(){
-        //select * from user where id=?
+    public void read() {
+/*        //select * from user where id=?
         //Optional<User> user = userRepository.findById(5L); //아이디가 3번인 유저가 있으면
         Optional<User>  user = userRepository.findByAccount("TestUser03");
 
@@ -52,11 +74,32 @@ public class UserRepositoryTest extends StudyApplicationTests {
                 Item item = detail.getItem();
                 System.out.println(item);
             });
-        });
+        });*/
+
+        //있는 번호라면 에러없이 통과
+        User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+
+        if (user != null) {
+            user.getOrderGroup().stream().forEach(orderGroup -> {
+                System.out.println("===============주문묶음==================");
+                System.out.println("수령인 : " + orderGroup.getRevName());
+                System.out.println("수령지 : " + orderGroup.getRevAddress());
+                System.out.println("총금액 : " + orderGroup.getTotalPrice());
+                System.out.println("총수량 : " + orderGroup.getTotalPrice());
+
+                System.out.println("===============주문상세==================");
+
+                orderGroup.getOrderDetailList().forEach(orderDetail -> {
+                    System.out.println("주문의상태 : " + orderDetail.getStatus());
+                    System.out.println("도착예정일자 : " + orderDetail.getArrivalDate());
+                });
+            });
+        }
+        Assertions.assertNotNull(user);
 
     }
 
-    @Test
+/*    @Test
     @Transactional
     public void update(){
 
@@ -90,12 +133,12 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
         Assertions.assertFalse(deleteUser.isPresent()); //false
 
-/*        if(deleteUser.isPresent()){
+*//*        if(deleteUser.isPresent()){
             System.out.println("데이터 존재 : " + deleteUser.get());
         }else{
             System.out.println("데이터 삭제 데이터 없음");
-        }*/
-    }
+        }*//*
+    }*/
 
 
 }
