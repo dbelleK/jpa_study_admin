@@ -1,6 +1,7 @@
 package com.example.study.repository;
 
 import com.example.study.StudyApplicationTests;
+import com.example.study.model.entity.Item;
 import com.example.study.model.entity.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -35,11 +36,22 @@ public class UserRepositoryTest extends StudyApplicationTests {
     }
 
     @Test
+    @Transactional
     public void read(){
-        Optional<User>  user = userRepository.findById(3L); //아이디가 3번인 유저가 있으면
+        //select * from user where id=?
+        //Optional<User> user = userRepository.findById(5L); //아이디가 3번인 유저가 있으면
+        Optional<User>  user = userRepository.findByAccount("TestUser03");
+
         user.ifPresent(selectUser ->{
-            System.out.println("user : " + selectUser); //출력
-            System.out.println("email : " + selectUser.getEmail());
+
+            //user에 있는 orderDetailList가져와서서 list형태이기에 stream으로 가져옴
+            selectUser.getOrderDetailList().stream().forEach(detail ->{
+
+                //System.out.println(detail.getItemId());
+
+                Item item = detail.getItem();
+                System.out.println(item);
+            });
         });
 
     }
@@ -48,7 +60,8 @@ public class UserRepositoryTest extends StudyApplicationTests {
     @Transactional
     public void update(){
 
-        Optional<User>  user = userRepository.findById(3L); //아이디가 3번인 유저가 있으면
+       Optional<User>  user = userRepository.findById(3L); //아이디가 3번인 유저가 있으면
+
         user.ifPresent(selectUser ->{
             selectUser.setAccount("pppp");
             selectUser.setUpdatedAt(LocalDateTime.now());

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data // 객체사용 //get,set
 @AllArgsConstructor //모든 매개변수 가지는 생성
@@ -32,4 +33,8 @@ public class User {
     private LocalDateTime updatedAt;
 
     private String updatedBy;
+
+    //1:N // 자신(User입장) 1 OrderDetail N
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<OrderDetail> orderDetailList; //OrderDetail이라는 클래스안에 user라는 변수에 매핑시키겠다
 }
