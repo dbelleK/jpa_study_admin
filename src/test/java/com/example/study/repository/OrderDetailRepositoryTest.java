@@ -36,15 +36,13 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests {
         orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2)); //현재일자부터 2틀이 더해짐
         orderDetail.setQuantity(1);
         orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
-        orderDetail.setOrderGroupId(1L); //장바구니
-        orderDetail.setItemId(1L);
         orderDetail.setCreatedAt(LocalDateTime.now());
         orderDetail.setCreatedBy("AdminServer");
 
        // 어떠한 장바구니에
-      // orderDetail.setOrderGroupId(1L); // Long -> OrderGroup
+      // orderDetail.setOrderGroupId(1L); //장바구니 // Long -> OrderGroup
         // 어떠한 상품
-       orderDetail.setItemId(1L);
+       //orderDetail.setItemId(1L);
 
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
         Assertions.assertNotNull(newOrderDetail);
