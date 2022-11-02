@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserApiResponse {
+public class UserApiResponse { //내려준 정보
 
     private Long id;
 

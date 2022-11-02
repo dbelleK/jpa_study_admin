@@ -17,7 +17,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
     @Autowired
     private UserRepository userRepository;
 
-    //1.request data
+    //1.request data 가져오기
     //2. user 생성
     //3. 생성된 데이터 -> UserApiResponse return
     @Override
@@ -29,9 +29,9 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
         //2. user 생성
         User user = User.builder()
                 .account(userApiRequest.getAccount())
-                .password((userApiRequest.getPassword()))
+                .password(userApiRequest.getPassword())
                 .status("REGISTERED")
-                .phoneNumber((userApiRequest.getPhoneNumber()))
+                .phoneNumber(userApiRequest.getPhoneNumber())
                 .email(userApiRequest.getEmail())
                 .registeredAt(LocalDateTime.now())
                 .build();
@@ -44,7 +44,12 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
     @Override
     public Header<UserApiResponse> read(Long id) {
-        return null;
+
+        return userRepository.findById(id)
+                .map(user ->  response(user))
+                .orElseGet(
+                        ()->Header.ERROR("데이터 없음")
+                );
     }
 
     @Override

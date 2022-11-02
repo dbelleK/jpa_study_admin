@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserApiRequest {
+public class UserApiRequest { //사용자의 요청을 받아주는 클래스 정의
 
     private Long id;
 
