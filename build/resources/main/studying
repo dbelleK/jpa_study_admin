@@ -5,3 +5,6 @@
 5. Repository 테스트
 6. 연관관계 설정
 7. 필요한 Query Method 생성
+
+//코드 리팩 토링 - 개발 코드 수정하기
+JPA Enum 형태의 값 관리
