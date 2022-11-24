@@ -7,4 +7,11 @@
 7. 필요한 Query Method 생성
 
 //코드 리팩 토링 - 개발 코드 수정하기
-JPA Enum 형태의 값 관리
+- JPA Enum 형태의 값 관리
+: REGISTERED / UNREGISTERED / WAITING 와 같은 오타 방지
+: ALL / EACH 등 구분
+
+//Controller 추상화 적용하기
+: Contoller  CrudContoller 하나 만들고 나머지 item,ordergroup,user ... 상속 받아서 적용 시킴 (간편)
+
+//Service 추상화 적용하기
