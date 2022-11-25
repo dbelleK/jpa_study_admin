@@ -94,7 +94,7 @@ public class ItemApiLogicService extends BaseService<ItemApiRequest, ItemApiResp
     }
 
     //공통메서드
-    private Header<ItemApiResponse> response(Item item){
+    public Header<ItemApiResponse> response(Item item){
 
         ItemApiResponse body = ItemApiResponse.builder()
                 .id(item.getId())

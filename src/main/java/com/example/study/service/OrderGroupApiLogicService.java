@@ -95,7 +95,7 @@ public class OrderGroupApiLogicService implements CrudInterface<OrderGroupApiReq
     }
 
     //공통메서드
-    private Header<OrderGroupApiResponse> response(OrderGroup orderGroup){
+    public Header<OrderGroupApiResponse> response(OrderGroup orderGroup){
 
         OrderGroupApiResponse body = OrderGroupApiResponse.builder()
                 .status(orderGroup.getStatus())
