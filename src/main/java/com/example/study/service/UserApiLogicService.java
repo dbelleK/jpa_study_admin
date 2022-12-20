@@ -79,12 +79,14 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
         //1. data 가져옴
         UserApiRequest userApiRequest = request.getData();
 
-        //2. id->user 데이터를 찾고
+        //2. id->user 데이터를 찾고 (id로 user를 찾음)
+        //optional에서는 있을 수도 있고 없을 수도 있고
         Optional<User> optional = userRepository.findById(userApiRequest.getId());
 
         return optional.map(user -> {
 
-            //3. udate
+            //@Accessors(chain = true) -> User에 이것으로 인해 체인으로 사용가능
+            //3. data를 가지고 update시킴 // data=userApiRequest
             //id
             user.setAccount(userApiRequest.getAccount())
                     .setPassword(userApiRequest.getPassword())
@@ -98,9 +100,9 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
             return user;
 
         })
-                //4. userApiResponse
-                .map(user -> userRepository.save(user)) //update -> newUser
-                .map(updateUser -> response(updateUser)) //userApiResponse
+                //4. userApiResponse 만듬
+                .map(user -> userRepository.save(user)) //update -> newUser // 업데이트된 값을 받아서 userRepository에 update함
+                .map(updateUser -> response(updateUser)) //userApiResponse 반환//updateUser=newUser
                 .map(Header::OK)
                 .orElseGet(() -> Header.ERROR("데이터없음"));
     }
@@ -113,17 +115,17 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
     @Override
     public Header delete(Long id) {
 
-        //1. id -> repository -> user
+        //1. id -> repository -> user // id를 가지고 repository통해서 user를 찾고
         Optional<User> optional = userRepository.findById(id);
 
-        //2. repository -> delete
+        //2. repository -> delete //repository통해서 delete 해주고
         return optional.map(user ->{
             userRepository.delete(user);
             return Header.OK();
         })
                 .orElseGet(() -> Header.ERROR("데이터없음"));
 
-        //3. response return
+        //3. response return //delete는 삭제되었기에 따로 response 내려줄것 없다
 
     }
 

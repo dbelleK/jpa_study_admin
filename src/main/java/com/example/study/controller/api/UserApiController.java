@@ -40,6 +40,7 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
     @PostMapping("") // /api/user
     public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> request){
 
+        //로그남기겠다는 것
         log.info("{}",request);
 
         //create와 service 연결
