@@ -1,2 +1,2 @@
 # jpa_study_admin
-jpa admin study
+jpa adminpage study
